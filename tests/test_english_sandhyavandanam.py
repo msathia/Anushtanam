@@ -1,4 +1,4 @@
-"""Protect English translation coverage and the two traditions' distinctions."""
+"""Protect English recitation coverage and the two traditions' distinctions."""
 import importlib.util
 from pathlib import Path
 import sys
@@ -21,15 +21,16 @@ class EnglishSandhyaTests(unittest.TestCase):
                 path = ROOT / 'en' / slug(veda, period) / 'index.html'
                 yield veda, period, path, Document(path)
 
-    def test_english_instructions_and_translations_cover_all_recitations(self):
+    def test_english_instructions_and_recitations_without_meanings(self):
         for veda, period, path, doc in self.pages():
             with self.subTest(veda=veda, period=period):
                 html = path.read_text()
                 self.assertIn('<html lang="en">', html)
                 # Only the Tamil language switch may contain Tamil.
                 self.assertNotRegex(html.replace('தமிழ்', ''), '[\u0b80-\u0bff]')
-                self.assertEqual(html.count('class="mantra"'), html.count('Close English meaning'))
-                self.assertGreater(html.count('Close English meaning'), 40)
+                self.assertNotIn('class="meaning"', html)
+                self.assertNotIn('meaning', html.lower())
+                self.assertGreater(html.count('class="mantra"'), 40)
                 count = 39 if veda == 'rigveda' and period == 'madhyanikam' else 38
                 self.assertEqual(html.count('<section class="card"'), count)
                 for required in ('achamanam', 'anga-vandanam', 'pranayama', 'marjanam', 'punarmarjanam', 'tarpanam', 'avahanam', 'gayatri-nyasa', 'gayatri-dhyanam', 'samarpanam', 'completion'):
@@ -41,9 +42,9 @@ class EnglishSandhyaTests(unittest.TestCase):
 
     def test_period_specific_intentions_and_water_prayers(self):
         prayers = {
-            'pratah': ('sūryaś ca mā', 'yad rātryā', 'rātris tad avalumpatu', 'sūrye jyotiṣi', 'during the night'),
-            'madhyanikam': ('āpaḥ punantu', "āpo 'satāṃ", 'gifts from the unworthy'),
-            'saayam': ('agniś ca mā', 'yad ahnā', 'ahas tad avalumpatu', 'satye jyotiṣi', 'during the day'),
+            'pratah': ('sūryaś ca mā', 'yad rātryā', 'rātris tad avalumpatu', 'sūrye jyotiṣi'),
+            'madhyanikam': ('āpaḥ punantu', "āpo 'satāṃ"),
+            'saayam': ('agniś ca mā', 'yad ahnā', 'ahas tad avalumpatu', 'satye jyotiṣi'),
         }
         for veda, period, _, doc in self.pages():
             with self.subTest(veda=veda, period=period):

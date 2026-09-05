@@ -20,8 +20,6 @@ header { margin:30px 0; }
 .source-note, footer { color:var(--muted); font-size:.91rem; }
 .label { font-size:.75rem; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin:20px 0 6px; font-weight:700; }
 .mantra { font-family:"Palatino Linotype",Palatino,"Noto Serif",Georgia,serif; font-size:1.22rem; line-height:1.9; margin:0 0 14px; overflow-wrap:anywhere; }
-.meaning { padding:12px 16px; background:#edf2f2; border-radius:6px; margin-bottom:22px; }
-.meaning p { margin:8px 0 0; }
 summary { cursor:pointer; font-weight:600; }
 .table-wrap { overflow-x:auto; }
 table { width:100%; border-collapse:collapse; margin:16px 0; }

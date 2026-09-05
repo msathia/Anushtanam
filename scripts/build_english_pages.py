@@ -25,17 +25,16 @@ def note(text):
     return f'<p class="source-note">{text}</p>'
 
 def recite(pair, attrs=''):
-    sanskrit, meaning = pair
+    sanskrit = pair[0]
     return (f'<div class="recitation"><p class="label">Sanskrit · IAST</p>'
-            f'<p class="mantra" lang="sa-Latn"{attrs}>{escape(sanskrit).replace(chr(10), "<br>")}</p>'
-            f'<details class="meaning" open><summary>Close English meaning</summary><p>{escape(meaning)}</p></details></div>')
+            f'<p class="mantra" lang="sa-Latn"{attrs}>{escape(sanskrit).replace(chr(10), "<br>")}</p></div>')
 
 def table(headers, rows):
     return '<div class="table-wrap"><table><thead><tr>' + ''.join(f'<th scope="col">{escape(h)}</th>' for h in headers) + '</tr></thead><tbody>' + ''.join('<tr>' + ''.join(f'<td>{escape(c)}</td>' for c in row) + '</tr>' for row in rows) + '</tbody></table></div>'
 
 def pronunciation():
     return '''<details class="pronunciation" id="pronunciation"><summary>How to pronounce the Sanskrit</summary>
-<p>The mantra uses IAST, a precise Roman transliteration of Sanskrit. Read the marked letters as Sanskrit sounds. The English meaning is for understanding; recite the Sanskrit block.</p>
+<p>The mantra uses IAST, a precise Roman transliteration of Sanskrit. Read the marked letters as Sanskrit sounds. Recite the Sanskrit block.</p>
 <ul><li><strong>a / ā, i / ī, u / ū:</strong> short / long vowels. Hold ā, ī and ū about twice as long. Keep e and o pure and long; ai and au are diphthongs.</li>
 <li><strong>ṛ:</strong> a syllabic r, not the English word “ree.” <strong>ṝ</strong> is its long counterpart. <strong>ḷ</strong> in the Rigvedic mṛḷaya is a retroflex lateral consonant.</li>
 <li><strong>c:</strong> like ch in “church”; <strong>j:</strong> like j in “judge.” <strong>ś:</strong> a palatal sh; <strong>ṣ:</strong> sh with the tongue curled back; <strong>s:</strong> a dental s.</li>
@@ -71,10 +70,9 @@ def build_page(veda, period):
         return recite((PREFIX + action + ' |', PREFIX_MEANING + meaning))
     names = ['Keśava', 'Nārāyaṇa', 'Mādhava', 'Govinda', 'Viṣṇu', 'Madhusūdana', 'Trivikrama', 'Vāmana', 'Śrīdhara', 'Hṛṣīkeśa', 'Padmanābha', 'Dāmodara']
     parts = [('Thumb', 'Right cheek'), ('Thumb', 'Left cheek'), ('Ring finger', 'Right eye'), ('Ring finger', 'Left eye'), ('Index finger', 'Right nostril'), ('Index finger', 'Left nostril'), ('Little finger', 'Right ear'), ('Little finger', 'Left ear'), ('Middle finger', 'Right shoulder'), ('Middle finger', 'Left shoulder'), ('Fingers' if yajur else 'Four fingers', 'Navel' if yajur else 'Chest'), ('All five fingers', 'Head')]
-    name_meanings = ['Keśava: the beautiful-haired one', 'Nārāyaṇa: refuge of beings', 'Mādhava: consort of Mā (Lakṣmī)', 'Govinda: protector of cows', 'Viṣṇu: the pervading one', 'Madhusūdana: slayer of Madhu', 'Trivikrama: the one of three strides', 'Vāmana: the dwarf', 'Śrīdhara: bearer of Śrī', 'Hṛṣīkeśa: lord of the senses', 'Padmanābha: lotus-navelled one', 'Dāmodara: the one with a cord around his belly']
-    card('achamanam', 'Ācamana — sipping water', instruction(f'Sit facing {seated}. Place a small quantity of clean water in the right palm and sip once for each of these three names.') + recite(('acyutāya namaḥ | anantāya namaḥ | govindāya namaḥ |', 'Salutation to Acyuta, the unfailing one; to Ananta, the endless one; to Govinda, protector of cows.')) + instruction('Wipe the lips and clean the hand as taught. Begin aṅgavandana by saying the first four names and touching the indicated places with the right hand.') + table(['Name to recite', 'Finger', 'Touch'], [(names[i], *parts[i]) for i in range(4)]) + note('Name meanings: ' + '; '.join(name_meanings[:4]) + '.'))
-    card('anga-vandanam', 'Aṅgavandana — touching the limbs', instruction('Continue with the remaining eight names, using the right hand.') + table(['Name to recite', 'Finger', 'Touch'], [(names[i], *parts[i]) for i in range(4, 12)]) + note('Name meanings: ' + '; '.join(name_meanings[4:]) + '. These are traditional meanings of Viṣṇu’s names; several names have more than one interpretation.'))
-    card('ganapati', 'Gaṇapati meditation', recite(GANAPATI) + instruction('Gently tap both sides of the forehead five times with the hands, following the method taught.') + note('A meditation verse used here for Gaṇapati; viṣṇum in this verse means “all-pervading.”'))
+    card('achamanam', 'Ācamana — sipping water', instruction(f'Sit facing {seated}. Place a small quantity of clean water in the right palm and sip once for each of these three names.') + recite(('acyutāya namaḥ | anantāya namaḥ | govindāya namaḥ |', 'Salutation to Acyuta, the unfailing one; to Ananta, the endless one; to Govinda, protector of cows.')) + instruction('Wipe the lips and clean the hand as taught. Begin aṅgavandana by saying the first four names and touching the indicated places with the right hand.') + table(['Name to recite', 'Finger', 'Touch'], [(names[i], *parts[i]) for i in range(4)]))
+    card('anga-vandanam', 'Aṅgavandana — touching the limbs', instruction('Continue with the remaining eight names, using the right hand.') + table(['Name to recite', 'Finger', 'Touch'], [(names[i], *parts[i]) for i in range(4, 12)]))
+    card('ganapati', 'Gaṇapati meditation', recite(GANAPATI) + instruction('Gently tap both sides of the forehead five times with the hands, following the method taught.') + note('A meditation verse used here for Gaṇapati.'))
     breath('pranayama')
     card('sankalpam', 'Saṅkalpa — intention for this worship', instruction(f'Sit facing {seated}. Rest the right hand over the left palm on the right thigh and state the intention.') + sankalpa(worship, f'I shall perform the {english_period.lower()} Sandhyā worship.') + instruction('Then touch water with the ring finger and place a water mark on the forehead while reciting:') + recite(('oṃ śrī keśavāya namaḥ |', 'Oṃ. Salutation to the blessed Keśava.')))
     water_instruction = instruction('Sprinkle water on the head with the ring finger for the first seven phrases; at “yasya kṣayāya jinvatha” sprinkle the feet, and at “āpo janayathā ca naḥ” sprinkle the head again.')
@@ -85,7 +83,7 @@ def build_page(veda, period):
         'madhyanikam': ('āpaḥ punantv ity anuvākasya viśvedevā ṛṣayaḥ | anuṣṭup chandaḥ | āpo devatā | apāṃ prāśane viniyogaḥ |', 'For the Āpaḥ punantu passage: the All-gods are the seers, Anuṣṭubh the metre, and the Waters the deity. It is used for sipping water.'),
         'saayam': ('agniś cety anuvākasya sūrya ṛṣiḥ | devī gāyatrī chandaḥ | agnir devatā | apāṃ prāśane viniyogaḥ |', 'For the Agniś ca passage: Sūrya is the seer, Devī Gāyatrī the metre, and Agni the deity. It is used for sipping water.'),
     }
-    card('prashanam', 'Mantra prāśana — purification by sipping', (instruction(NYASA_INSTRUCTION) + recite(prashana_nyasa[period]) if not yajur else '') + instruction('Hold a little water in the right palm. Recite the entire mantra, then sip the water.') + recite(PRASHANA[period]) + note('The period-specific text is transmitted in the Taittirīya Āraṇyaka / Mahānārāyaṇa Upaniṣad tradition. Manyu denotes anger or wrath, also personified as a divine power.') + instruction(ACHAMANA_AGAIN))
+    card('prashanam', 'Mantra prāśana — purification by sipping', (instruction(NYASA_INSTRUCTION) + recite(prashana_nyasa[period]) if not yajur else '') + instruction('Hold a little water in the right palm. Recite the entire mantra, then sip the water.') + recite(PRASHANA[period]) + note('The period-specific text is transmitted in the Taittirīya Āraṇyaka / Mahānārāyaṇa Upaniṣad tradition.') + instruction(ACHAMANA_AGAIN))
     dadhi_nyasa = ('dadhikrāvṇa ity asya mantrasya vāmadeva ṛṣiḥ | anuṣṭup chandaḥ | dadhikrāvā devatā | apāṃ prokṣaṇe viniyogaḥ |', 'For the Dadhikrāvan mantra: Vāmadeva is the seer, Anuṣṭubh the metre, and Dadhikrāvan the deity. It is used for sprinkling water.')
     card('punarmarjanam', 'Punarmārjana — sprinkling again', (instruction(NYASA_INSTRUCTION) + recite(dadhi_nyasa) if not yajur else '') + instruction('Sprinkle water on the head while reciting Dadhikrāvṇo.') + note('Ṛgveda 4.39.6, addressed to Dadhikrāvan, the divine horse.') + recite(DADHI) + (recite(APO_NYASA) if not yajur else '') + water_instruction + recite(APO) + recite(vyahrti_pair) + circle)
     card('arghyam', 'Arghya — offering water', instruction(f'Stand facing {direction}. Hold water in both cupped palms. Recite the complete mantra and offer the water {arghyas} times, reciting once for each offering. Release the water into a clean place or the receiving vessel.') + recite(gayatri) + note('The Sāvitrī verse addresses Savitṛ, the divine impeller; Ṛgveda 3.62.10. The offering count follows this guide’s selected practice.'))
@@ -109,7 +107,7 @@ def build_page(veda, period):
     card('avahanam', 'Gāyatrī āvāhana — invocation', instruction(NYASA_INSTRUCTION) + recite(AVAHANA_NYASA) + instruction('Recite the invocation. At each “āvāhayāmi,” bring the joined palms towards yourself in the gesture of inviting, as taught.') + recite(AVAHANA))
     card('gayatri-nyasa', 'Nyāsa for Gāyatrī japa', instruction(NYASA_INSTRUCTION) + recite(JAPA_NYASA))
     card('gayatri-dhyanam', 'Gāyatrī meditation', recite(DHYANA) + note('These are meditation verses, distinct from the Vedic Sāvitrī mantra that follows.'))
-    card('gayatri-japam', 'Gāyatrī mantra japa', instruction(f'Sit facing {direction} in the posture taught by your guru. This guide uses {japam} repetitions for {english_period.lower()}; follow the count given in your instruction.') + recite(gayatri) + note('Seer: Viśvāmitra. Metre: Nicṛd Gāyatrī. Deity: Savitṛ. The English meaning is not part of the recitation.'))
+    card('gayatri-japam', 'Gāyatrī mantra japa', instruction(f'Sit facing {direction} in the posture taught by your guru. This guide uses {japam} repetitions for {english_period.lower()}; follow the count given in your instruction.') + recite(gayatri) + note('Seer: Viśvāmitra. Metre: Nicṛd Gāyatrī. Deity: Savitṛ.'))
     if not yajur and period == 'madhyanikam':
         card('brahma-yagnam-section', 'Brahmayajña — this guide’s noon family practice', instruction('If you follow the original guide’s sequence, perform Brahmayajña here. <a href="../../brahma-yagnam.html" target="_blank" rel="noopener">Open the Brahmayajña guide (Tamil; new tab)</a>. Return to this tab afterwards and continue below.') + note('This is the existing separate Rigveda Brahmayajña guide. Its placement here is a family practice.'))
     breath('pranayama-after-japa')
@@ -140,14 +138,14 @@ def build_page(veda, period):
         card('upasthana-prayers', 'Prayers following upasthāna', extra + note('The deity assignments above follow this ritual nyāsa; these do not establish a single interpretation of every hymn.'))
     dirs = ['east', 'south', 'west', 'north'] if yajur or period != 'saayam' else ['west', 'north', 'east', 'south']
     sandhya_names = ['sandhyāyai namaḥ', 'sāvitryai namaḥ', 'gāyatryai namaḥ', 'sarasvatyai namaḥ']
-    card('sandhya-vandanam', 'Salutations to the Sandhyā deities', instruction('Turn clockwise through ' + ', '.join(dirs) + f', joining the palms in each direction. Then face {direction}.') + table(['Recitation', 'Direction'], [(n + ' |', d.title()) for n, d in zip(sandhya_names, dirs)]) + recite(('sarvābhyo devatābhyo namo namaḥ |\nkāmo ’kārṣīn manyur akārṣīt namo namaḥ |', 'Repeated salutations to all the deities. Desire did it; anger did it: repeated salutations. This acknowledges the impulses behind wrongdoing.')) + note('The four directional formulas mean: salutation to Sandhyā, Sāvitrī, Gāyatrī and Sarasvatī, respectively.'))
+    card('sandhya-vandanam', 'Salutations to the Sandhyā deities', instruction('Turn clockwise through ' + ', '.join(dirs) + f', joining the palms in each direction. Then face {direction}.') + table(['Recitation', 'Direction'], [(n + ' |', d.title()) for n, d in zip(sandhya_names, dirs)]) + recite(('sarvābhyo devatābhyo namo namaḥ |\nkāmo ’kārṣīn manyur akārṣīt namo namaḥ |', 'Repeated salutations to all the deities. Desire did it; anger did it: repeated salutations. This acknowledges the impulses behind wrongdoing.')))
     identity = 'āpastamba sūtraḥ yajuśśākhādhyāyī' if yajur else 'āśvalāyana sūtraḥ ṛkśākhādhyāyī'
     abhi_direction = 'north' if yajur and period == 'madhyanikam' else direction
     card('abhivadanam', 'Abhivādana — stating lineage and saluting', instruction(f'Face {abhi_direction}. Supply the pravara sages, their count, gotra and personal name exactly as taught in your family. Do not recite the bracketed English prompts. Then bow in the manner taught.') + recite(('abhivādaye [your pravara sages] [your pravara count] pravarānvitaḥ |\n[your gotra] gotraḥ ' + identity + ' |\n[your name] śarmā nāmāham asmi bhoḥ ||', 'I respectfully salute. I belong to the lineage marked by [the named sages and their number], of [the named gotra], following the ' + ('Āpastamba sūtra and studying the Yajurveda branch' if yajur else 'Āśvalāyana sūtra and studying the Rigveda branch') + '. My name is [name] Śarmā, revered sir.')) + note('The personal fields are not guessed. Use your own instructed lineage formula.'))
     direction_rows = [('prācyai diśe namaḥ |', 'East'), ('dakṣiṇāyai diśe namaḥ |', 'South'), ('pratīcyai diśe namaḥ |', 'West'), ('udīcyai diśe namaḥ |', 'North')]
     if period == 'saayam':
         direction_rows = direction_rows[2:] + direction_rows[:2]
-    card('dig-vandanam', 'Digvandana — salutations to the directions', instruction(f'Begin facing {direction} and turn clockwise for the four horizontal directions.') + table(['Recitation', 'Direction'], direction_rows) + recite(('ūrdhvāya namaḥ | adharāya namaḥ | antarikṣāya namaḥ |\nbhūmyai namaḥ | brahmaṇe namaḥ | viṣṇave namaḥ | yamāya namaḥ |', 'Salutation to what is above, to what is below, to the intermediate space, to Earth, to Brahmā, to Viṣṇu and to Yama.')) + instruction('Acknowledge above and below as taught; face south for Yama.') + note('The four directional formulas mean “Salutation to the eastern / southern / western / northern direction.”'))
+    card('dig-vandanam', 'Digvandana — salutations to the directions', instruction(f'Begin facing {direction} and turn clockwise for the four horizontal directions.') + table(['Recitation', 'Direction'], direction_rows) + recite(('ūrdhvāya namaḥ | adharāya namaḥ | antarikṣāya namaḥ |\nbhūmyai namaḥ | brahmaṇe namaḥ | viṣṇave namaḥ | yamāya namaḥ |', 'Salutation to what is above, to what is below, to the intermediate space, to Earth, to Brahmā, to Viṣṇu and to Yama.')) + instruction('Acknowledge above and below as taught; face south for Yama.'))
     card('yama', 'Yama vandana', instruction('Stand facing south.') + recite(YAMA))
     card('harihara', 'Harihara vandana', instruction('Stand facing north, with palms joined.') + recite(HARIHARA))
     card('narmada', 'Narmadā and serpent prayer — optional in some families', instruction('If this prayer belongs to your family’s practice, stand facing west and recite.') + recite(NARMADA))
@@ -163,16 +161,16 @@ def build_page(veda, period):
     title = f'{veda_title} {name} Sandhyāvandanam'
     html = f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{title} — English instructions, Sanskrit IAST and meanings</title>
-<meta name="description" content="{veda_title} {english_period.lower()} Sandhyavandanam: full English instructions, Sanskrit IAST pronunciation, close English meanings and period-specific sankalpas.">
+<title>{title} — English instructions and Sanskrit IAST</title>
+<meta name="description" content="{veda_title} {english_period.lower()} Sandhyavandanam: full English instructions, Sanskrit IAST pronunciation and period-specific sankalpas.">
 <link rel="stylesheet" href="../style.css"><link rel="alternate" hreflang="ta" href="../../{slug(veda, period)}/"></head>
 <body><a class="skip-link" href="#steps">Skip to the steps</a><main class="container">{language}{nav}
 <header><p class="eyebrow">{english_period} · {timing}</p><h1>{title}</h1><p class="tradition">{tradition}</p>
-<p>English instructions, Sanskrit in Roman transliteration, and close English meanings for every recitation. Read the meaning first if helpful; recite the Sanskrit text.</p>
+<p>Follow the English ritual instructions and recite the Sanskrit mantras in Roman transliteration.</p>
 <p class="source-note">This follows the selected family procedure on this site. Counts, posture, nyāsa and some readings vary: follow your guru’s instruction. {'This is not a Śukla Yajurveda guide.' if yajur else ''}</p></header>
 {pronunciation()}{toc}<div id="steps">{''.join(cards)}</div>
-<details class="sources" id="sources"><summary>Sources and translation notes</summary><ul>{sources}</ul>
-<p>The English meanings are close prose renderings prepared for this guide, not substitute recitations. Names and difficult Vedic terms sometimes admit more than one interpretation. Nyāsa formulas and later prayer verses are identified separately from Saṃhitā verses. Spaces aid reading; pitch accents are not shown.</p></details>
+<details class="sources" id="sources"><summary>Sources and recitation notes</summary><ul>{sources}</ul>
+<p>Nyāsa formulas and later prayer verses are identified separately from Saṃhitā verses. Spaces aid reading; pitch accents are not shown.</p></details>
 <footer>English text review: 5 September 2026 · <a href="#pronunciation">Pronunciation key</a> · <a href="../">All English guides</a></footer>
 </main></body></html>'''
     path = ROOT / 'en' / slug(veda, period) / 'index.html'
@@ -191,7 +189,7 @@ def main():
         links += '</nav></section>'
     (ROOT / 'en/index.html').write_text(f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Anushtanam — English Sandhyavandanam guides</title><link rel="stylesheet" href="style.css"></head>
-<body><main class="container"><nav class="language-nav" aria-label="Language"><strong>English</strong> · <a href="../" lang="ta" hreflang="ta">தமிழ்</a></nav><h1>Anushtanam</h1><p>Daily Sandhyāvandanam with English instructions, Sanskrit IAST recitation and close English meanings.</p>{links}<p class="source-note">Choose your Veda and the time of day. Each guide includes its own saṅkalpas, water-purification prayer and upasthāna.</p></main></body></html>
+<body><main class="container"><nav class="language-nav" aria-label="Language"><strong>English</strong> · <a href="../" lang="ta" hreflang="ta">தமிழ்</a></nav><h1>Anushtanam</h1><p>Daily Sandhyāvandanam with English instructions and Sanskrit IAST recitation.</p>{links}<p class="source-note">Choose your Veda and the time of day. Each guide includes its own saṅkalpas, water-purification prayer and upasthāna.</p></main></body></html>
 ''')
 
 if __name__ == '__main__':

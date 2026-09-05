@@ -5,7 +5,15 @@ Prepared 2026-09-05. Six new `/en/` pages preserve the separate Rigveda
 procedures. The English landing page puts Yajurveda first. Tamil pages remain
 available through reciprocal language links.
 
-## Text and translation policy
+## Current display policy
+
+English meanings were removed at the user’s request. Pages show Sanskrit IAST
+and English ritual instructions only. This includes removing inline name and
+directional-formula meanings, translation panels, and navigation/metadata
+that advertised meanings. The earlier translation review below is historical;
+the paired meaning data is not rendered by the page builder.
+
+## Original text and translation review (historical)
 
 The Sanskrit is rendered in IAST from the selected Sanskrit readings, rather
 than mechanically romanizing Tamil spellings. This distinguishes vowel length,
@@ -15,11 +23,11 @@ transcription. Spaces occasionally separate sandhi-linked words for reading.
 The pronunciation key explains that spaces are not pauses and that svara and
 special Vedic nasal realizations require oral instruction.
 
-Each recitation block has a separate, initially visible close English meaning.
+Originally, each recitation block had a separate, initially visible close English meaning.
 Meanings are original prose renderings, not copied modern translations. Proper
 names and terms with uncertain or multiple senses are retained and explained.
 The limb names and directional formulas are translated beside their tables.
-The user can collapse individual meanings for chanting; reading needs no JS.
+Those meaning panels are no longer included in the generated pages; reading needs no JS.
 
 Sources consulted for the ancient texts and selected ritual readings:
 
