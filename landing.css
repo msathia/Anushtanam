@@ -1,0 +1,38 @@
+
+  :root { color-scheme:light dark; --page:light-dark(#f4f3ee,#191d20); --paper:light-dark(#fffdf8,#242a2e); --ink:light-dark(#24384a,#e4e9ec); --muted:light-dark(#55616d,#abb8bf); --line:light-dark(#d9ddd9,#424c52); --accent:light-dark(#943b2c,#f0ac93); --hover:light-dark(#f8f0e9,#33302d); }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--page); color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.6; }
+  main { width:min(960px,100%); margin:24px auto; padding:28px; }
+  .top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:36px; }
+  .brand { font-family:Georgia,serif; font-size:26px; }
+  a { color:inherit; text-underline-offset:4px; }
+  a:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
+  .language { color:var(--muted); font-size:14px; white-space:nowrap; }
+  .language strong { color:var(--ink); font-weight:600; }
+  h1 { font-size:30px; font-weight:600; line-height:1.3; margin:0 0 8px; }
+  .intro { margin:0 0 28px; color:var(--muted); }
+  .vedas { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
+  .veda { min-width:0; background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:26px; }
+  .veda h2 { font-family:Georgia,serif; font-size:28px; font-weight:400; line-height:1.3; margin:0 0 10px; }
+  .tradition { color:var(--muted); font-size:14px; min-height:46px; margin:0 0 24px; }
+  .periods { display:grid; gap:10px; }
+  .period { display:grid; grid-template-columns:26px minmax(0,1fr) 18px; gap:14px; align-items:center; padding:14px; border:1px solid var(--line); border-radius:9px; text-decoration:none; background:var(--paper); }
+  .period:hover { border-color:var(--accent); background:var(--hover); }
+  .period strong { display:block; font-size:16px; font-weight:600; }
+  .period small { display:block; color:var(--muted); font-size:13px; }
+  .icon { width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; color:var(--accent); }
+  .arrow { color:var(--accent); font-size:20px; }
+  .other { border-top:1px solid var(--line); margin-top:32px; padding-top:22px; }
+  .other h2 { font-size:16px; font-weight:600; margin:0 0 14px; }
+  .other-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; }
+  .other-card { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:24px; background:var(--paper); border:1px solid var(--line); border-radius:14px; text-decoration:none; }
+  .other-card:hover { border-color:var(--accent); background:var(--hover); }
+  .other-card h3 { font-size:19px; font-weight:600; margin:0 0 8px; }
+  .other-card p { color:var(--muted); font-size:14px; margin:0; }
+  .symbols { position:absolute; width:0; height:0; overflow:hidden; }
+  @media(max-width:650px) { main { padding:20px; margin:0 auto; } .vedas,.other-grid { grid-template-columns:1fr; gap:18px; } .veda { padding:22px; } .tradition { min-height:0; margin-bottom:20px; } h1 { font-size:26px; } .top { margin-bottom:28px; } }
+  @media(max-width:360px) { .period { gap:10px; padding:12px; } .veda { padding:18px; } }
+  html[lang="ta"] .brand { font-family:inherit; }
+  html[lang="ta"] .veda h2 { font-family:inherit; font-size:24px; }
+  .period span { min-width:0; overflow-wrap:anywhere; }
+

@@ -181,16 +181,8 @@ def main():
     for veda in ('yajurveda', 'rigveda'):
         for period in PERIODS:
             build_page(veda, period)
-    links = ''
-    for veda, title, tradition in [('yajurveda', 'Yajurveda', 'Kṛṣṇa Yajurveda · Taittirīya · Āpastamba · Smārta'), ('rigveda', 'Rigveda', 'Āśvalāyana · Smārta')]:
-        links += f'<section><h2>{title}</h2><p>{tradition}</p><nav class="guide-grid" aria-label="{title} guides">'
-        for period, (name, english, timing, _, _) in PERIODS.items():
-            links += f'<a class="guide-link" href="{slug(veda, period)}/"><strong>{name} Sandhyāvandanam</strong><span>{english} · {timing}</span></a>'
-        links += '</nav></section>'
-    (ROOT / 'en/index.html').write_text(f'''<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Anushtanam — English Sandhyavandanam guides</title><link rel="stylesheet" href="style.css"></head>
-<body><main class="container"><nav class="language-nav" aria-label="Language"><strong>English</strong> · <a href="../" lang="ta" hreflang="ta">தமிழ்</a></nav><h1>Anushtanam</h1><p>Daily Sandhyāvandanam with English instructions and Sanskrit IAST recitation.</p>{links}<p class="source-note">Choose your Veda and the time of day. Each guide includes its own saṅkalpas, water-purification prayer and upasthāna.</p></main></body></html>
-''')
+    from build_landing_pages import build_landing_pages
+    build_landing_pages(ROOT)
 
 if __name__ == '__main__':
     main()
